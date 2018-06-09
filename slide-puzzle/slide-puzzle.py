@@ -75,6 +75,7 @@ def main():
                     elif SOLVE_RECT.collidepoint(event.pos):
                         resetAnimation(mainBoard, solutionSeq + allMoves)
                         allMoves = []
+                        solutionSeq = []
                 else:
                     blankx, blanky = getBlankPosition(mainBoard)
                     if spotx == blankx + 1 and spoty == blanky:
