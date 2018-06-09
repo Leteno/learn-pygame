@@ -1,0 +1,12 @@
+
+# python
+*.pyc
+
+
+# mac
+.DS_Store
+
+
+# other
+*.out
+*.dat
