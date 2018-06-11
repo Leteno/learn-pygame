@@ -27,6 +27,10 @@ DOWN = 'down'
 LEFT = 'left'
 RIGHT = 'right'
 
+SOLVED = 'solved'
+NEXT = 'next'
+BACK = 'back'
+RESET = 'reset'
 
 def main():
     global FPSCLOCK, DISPLAYSURF, IMAGESDICT, TILEMAPPING, OUTSIDEDECOMAPPING, BASICFONT, PLAYERIMAGES, currentImage
@@ -83,15 +87,15 @@ def main():
     while True:
         result = runLevel(levels, currentLevelIndex)
 
-        if result in ('solved', 'next'):
+        if result in (SOLVED, NEXT):
             currentLevelIndex += 1
             if currentLevelIndex >= len(levels):
                 currentLevelIndex = 0
-        elif result == 'back':
+        elif result == BACK:
             currentLevelIndex -= 1
             if currentLevelIndex < 0:
                 currentLevelIndex = len(levels) - 1
-        elif result == 'reset':
+        elif result == RESET:
             pass
 
 
@@ -144,13 +148,13 @@ def runLevel(levels, levelNum):
                 elif event.key == K_s:
                     cameraDown = True
                 elif event.key == K_n:
-                    return 'next'
+                    return NEXT
                 elif event.key == K_b:
-                    return 'back'
+                    return BACK
                 elif event.key == K_ESCAPE:
                     terminate()
                 elif event.key == K_BACKSPACE:
-                    return 'reset'
+                    return RESET
                 elif event.key == K_p:
                     currentImage += 1
                     if currentImage >= len(PLAYERIMAGES):
@@ -209,7 +213,7 @@ def runLevel(levels, levelNum):
             DISPLAYSURF.blit(IMAGESDICT['solved'], solvedRect)
 
             if keyPressed:
-                return 'solved'
+                return SOLVED
 
        	pygame.display.update()
        	FPSCLOCK.tick()
