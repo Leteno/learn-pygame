@@ -7,7 +7,7 @@ from gamestate import WELCOME, CONFIG, FPS
 from util import *
 import color
 
-def runGame(surface, clock):
+def runGame(surface, clock, data):
     print('showing config scene')
     w = surface.get_width()
     h = surface.get_height()

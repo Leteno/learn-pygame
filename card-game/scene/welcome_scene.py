@@ -3,11 +3,11 @@
 import pygame
 from pygame.locals import *
 
-from gamestate import WELCOME, CONFIG, CHARACTER, EXIT, FPS
+from gamestate import WELCOME, CONFIG, GAME, EXIT, FPS
 from util import *
 import color
 
-def runGame(surface, clock):
+def runGame(surface, clock, data):
     print('showing welcome scene')
     w = surface.get_width()
     h = surface.get_height()
@@ -39,7 +39,7 @@ def runGame(surface, clock):
             if event.type == MOUSEBUTTONUP:
                 if startGameRect.collidepoint(event.pos) :
                     print('click on start game')
-                    return CHARACTER
+                    return GAME
                 elif configRect.collidepoint(event.pos) :
                     print('click on config')
                     return CONFIG

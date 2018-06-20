@@ -2,14 +2,13 @@
 
 WELCOME='welcome'
 CONFIG='config'
-CHARACTER='charecter'
 MAP='map'
 GAME='game'
 EXIT='exit'
 
 FPS=30
 
-class man :
+class charector :
     PLAYER = 'player'
     ANIMAL = 'animal'
     def __init__(self, species, str=1, dex=1, int=1, snum=1, dnum=1, inum=1):
@@ -42,3 +41,18 @@ class man :
     def __str__(self):
         return 'class man str: {}, dex: {}, int: {}, snum: {}, dnum: {}, inum: {}, species: {}'.format(
             self.str, self.dex, self.int, self.snum, self.dnum, self.inum, self.species)
+
+class config :
+    def __init__(self):
+        self.sound = 4
+        self.difficulty = 1
+
+class game_data :
+    def __init__(self):
+        self.user = charector(charector.PLAYER)
+        self.level = 0
+        self.score = 0
+        self.config = config()
+
+    def reset(self):
+        delattr(self.user, 'init')
