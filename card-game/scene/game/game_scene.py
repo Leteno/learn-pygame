@@ -1,5 +1,5 @@
 
-from scene.game import charector_select_scene
+from scene.game import charector_select_scene, map_scene
 from record import *
 
 def runGame(surface, fpsclock, data) :
@@ -8,5 +8,7 @@ def runGame(surface, fpsclock, data) :
 
     record(data)
     record(data.user)
-        
+
+    while True:
+        map_scene.show(surface, fpsclock, data)
     print("game_scene is done\n")

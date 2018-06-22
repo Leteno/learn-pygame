@@ -15,4 +15,3 @@ def checkForQuit():
             terminate()
         pygame.event.post(event)
 
-    
