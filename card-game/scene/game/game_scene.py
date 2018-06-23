@@ -10,5 +10,7 @@ def runGame(surface, fpsclock, data) :
     record(data.user)
 
     while True:
-        map_scene.show(surface, fpsclock, data)
+        status = map_scene.show(surface, fpsclock, data)
+        if status is map_scene.SELECT_FINISH :
+            break
     print("game_scene is done\n")
