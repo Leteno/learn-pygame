@@ -1,0 +1,15 @@
+; hello world
+num: 0
+type: event
+next: (1, 2)
+point: (200, 360)
+
+num: 1
+type: battle
+level: 1
+point: (140, 280)
+
+num: 2
+type: store
+level: 1
+point: (260, 260)
