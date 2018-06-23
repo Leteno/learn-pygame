@@ -18,6 +18,7 @@ DARKDICT = {T_STORE: pygame.image.load('res/store-darker.png'),
             T_EVENT: pygame.image.load('res/event-darker.png'),
             T_BATTLE: pygame.image.load('res/battle-darker.png')}
 
+DONE = 'done'
 
 def show(surface, fpsclock, data):
     print('map_scene is showing')
@@ -31,18 +32,30 @@ def show(surface, fpsclock, data):
         checkForQuit()
 
         # draw it
-        surface.fill(color.DARKGRAY)
+        surface.fill(color.WHITE)
 
-        draw_map(surface, data.map)
+        result = draw_map(surface, data.map)
+        if result is DONE:
+            # game is over ?
+            return DONE
 
         pygame.display.update()
         fpsclock.tick(FPS)
 
+
 def draw_map(surface, map):
     header = map.header
     current_item = map.current_item
+    selected_item = map.selected_item
+
+    if not selected_item or selected_item not in current.item.next:
+        if not len(current_item.next) :
+            return DONE
+        selected_item = current_item.next[0]
+
     def g(item):
-        return get_proper_image(item, current_item)
+        return get_proper_image(item, current_item, selected_item)
+
     items = [header]
     count = 0
     maxCount = 100
@@ -61,6 +74,7 @@ def draw_map(surface, map):
             rect = surf.get_rect()
             rect.center = item.point
             surface.blit(surf, rect)
+
             if item.prev :
                 for i in item.prev:
                     if i is None:
@@ -71,8 +85,25 @@ def draw_map(surface, map):
         items = next_items
 
 
-def get_proper_image(map_item, current_item):
+map_scene_blink = False
+map_scene_blink_count = 0
+map_scene_blink_count_max = 5
+def get_proper_image(map_item, current_item, selected_item):
+    global map_scene_blink, map_scene_blink_count
+
     dictionary = DARKDICT
     if current_item in map_item.prev :
         dictionary = LIGHTDICT
+
+    if map_item is selected_item:
+        if map_scene_blink:
+            dictionary = DARKDICT
+        else:
+            dictionary = LIGHTDICT
+
+        map_scene_blink_count += 1
+        if map_scene_blink_count > map_scene_blink_count_max:
+            map_scene_blink = not map_scene_blink
+            map_scene_blink_count = 0
+
     return dictionary[map_item.type]

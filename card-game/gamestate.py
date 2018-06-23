@@ -77,6 +77,7 @@ class map_data :
     def __init__(self):
         self.header = None
         self.current_item = self.header
+        self.selected_item = None
 
     def read_from_file(self, filename):
         assert os.path.exists(filename), 'Cannot find the map file: %s' % (filename)
