@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "name": "d3",
+    "level": 1,
+    "cost": 1,
+    "functional": [
+      {
+        "target": ["enemy"],
+	"func": "damage",
+	"power": 3
+      }
+    ]
+  },
+
+  {
+    "id": 2,
+    "name": "h3",
+    "level": 1,
+    "cost": 1,
+    "functional": [
+      {
+        "target": ["friend", "self"],
+	"func": "heal",
+	"power": 3
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "d5",
+    "level": 2,
+    "cost": 2,
+    "functional": [
+      {
+        "target": ["enemy"],
+	"func": "damage",
+	"power": 5
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "d8",
+    "level": 2,
+    "cost": 3,
+    "functional": [
+      {
+        "target": ["enemy"],
+	"func": "damage",
+	"power": 8
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "h9",
+    "level": 3,
+    "cost": 4,
+    "functional": [
+      {
+        "target": ["friend", "self"],
+	"func": "heal",
+	"power": 9
+      }
+    ]
+  }
+]

@@ -2,6 +2,8 @@
 
 import copy, re, os
 
+from card import card
+
 WELCOME='welcome'
 CONFIG='config'
 GAME='game'
@@ -157,6 +159,8 @@ class game_data :
         self.config = config()
         self.map = map_data()
         self.map.read_from_file('res/map.dat')
+        self.card_pool = card.get_card_pool('res/card.dat')
+        self.current_user_card_pool = []
 
     def reset(self):
         delattr(self.user, 'init')
