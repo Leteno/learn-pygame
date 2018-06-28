@@ -22,11 +22,14 @@ def runGame(surface, fpsclock, data) :
                 break
 
             assert (s.type in [T_EVENT, T_STORE, T_BATTLE]), "unexpected map_item type meet: %s" % s.type
-            if s.type is T_EVENT:
+            if s.type == T_EVENT:
                 nop = 1
-            elif s.type is T_STORE:
+            elif s.type == T_STORE:
                 store_scene.show(surface, fpsclock, data)
-            elif s.type is T_BATTLE:
+            elif s.type == T_BATTLE:
                 nop = 1
+
+        if s and s.type == T_STORE:
+            data.map.current_item = data.map.selected_item
 
     print("game_scene is done\n")

@@ -22,6 +22,7 @@ class card :
         self.name = "undefine"
         self.level = 1
         self.cost = 1
+        self.imagef = 'res/battle-darker.png'
         self.functional = []
 
     def __str__(self):
