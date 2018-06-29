@@ -7,6 +7,17 @@ import util
 from card import card_generator, card_inflater
 import color
 
+DEALING = 'DEALING'
+SELECTED = 'SELECTED'
+
+class CardModel:
+    def __init__(self, surf, rect, defaultRect, selecting, card):
+        self.surf = surf
+        self.rect = rect
+        self.defaultRect = defaultRect
+        self.selecting = selecting
+        self.card = card
+
 def show(surface, fpsclock, data):
     print('showing store_scene')
 
@@ -15,12 +26,22 @@ def show(surface, fpsclock, data):
     while True:
         # mouse or keyboard event
         util.checkForQuit()
-        eventDealer(cardModels)
+        code, other = eventDealer(cardModels)
+        if code == SELECTED:
+            _card = other
+            print('store_scene select done: %s' % _card)
+            data.current_user_card_pool.append(_card)
+            return
+
         # render
         surface.fill(color.WHITE)
         x0 = 0
-        for cardView, cardRect, _ in cardModels:
-            surface.blit(cardView, cardRect)
+        for _model in cardModels:
+            rect, defaultRect, selecting = _model.rect, _model.defaultRect, _model.selecting
+            rect.top = defaultRect.top
+            if _model.selecting :
+                rect.top -= 20
+            surface.blit(_model.surf, _model.rect)
 
         pygame.display.update()
         fpsclock.tick(FPS)
@@ -48,19 +69,47 @@ def generateCardModels(surface, data):
         cardRect = cardSurf.get_rect()
         x0 += cardWidth + 10
         cardRect.center = (x0, h0)
-        cardModels.append((cardSurf, cardRect, Rect(cardRect))) # the third one for reset
+        selecting = False
+        cardModels.append(CardModel(cardSurf, cardRect, Rect(cardRect), selecting, card)) # the third one for reset
 
     return cardModels
+
 
 def eventDealer(cardModels):
     for event in pygame.event.get():
         if event.type == MOUSEMOTION:
-            for i in range(len(cardModels)):
-                model = cardModels[i]
-                surf, rect, defaultRect = model
+            for _model in cardModels:
+                rect = _model.rect
+                defaultRect = _model.defaultRect
                 if rect.collidepoint(event.pos):
-                    rect.top = defaultRect.top - 20
+                    _model.selecting = True
                 else:
-                    rect.top = defaultRect.top
+                    _model.selecting = False
 
-                cardModels[i] = (surf, rect, defaultRect)
+        elif event.type == KEYDOWN:
+            if event.key == K_RETURN:
+                for _model in cardModels:
+                    if _model.selecting :
+                        return SELECTED, _model.card
+
+            elif event.key in [K_a, K_LEFT]:
+                _len = len(cardModels)
+                for i in reversed(range(_len)):
+                    _model = cardModels[i]
+                    if _model.selecting or i == 0:
+                        _model.selecting = False
+                        _next = cardModels[(i + _len - 1) % _len]
+                        _next.selecting = True
+                        break
+            elif event.key in [K_d, K_RIGHT]:
+                _len = len(cardModels)
+                for i in range(_len):
+                    _model = cardModels[i]
+                    if _model.selecting or i == _len - 1:
+                        _model.selecting = False
+                        _next = cardModels[(i + 1) % _len]
+                        _next.selecting = True
+                        break
+
+
+    return DEALING, None
