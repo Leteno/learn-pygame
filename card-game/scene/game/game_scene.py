@@ -28,6 +28,9 @@ def runGame(surface, fpsclock, data) :
                 store_scene.show(surface, fpsclock, data)
             elif s.type == T_BATTLE:
                 nop = 1
+        elif status is map_scene.DONE:
+            print('game is over~')
+            return
 
         if s and s.type == T_STORE:
             data.map.current_item = data.map.selected_item

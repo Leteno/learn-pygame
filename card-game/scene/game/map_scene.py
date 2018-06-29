@@ -46,8 +46,10 @@ def show(surface, fpsclock, data):
 
         m = data.map
         li = m.current_item.next
-        if len(li) < 0 :
+        if len(li) <= 0 :
             return DONE
+        if m.selected_item == m.current_item:
+            m.selected_item = None
         if m.selected_item is None:
             m.selected_item = li[0]
 
