@@ -60,6 +60,7 @@ class map_item :
         self.point = None
         self.next = []
         self.prev = []
+        self.selected = False
 
     @property
     def type(self):
@@ -78,8 +79,18 @@ class map_item :
 class map_data :
     def __init__(self):
         self.header = None
-        self.current_item = self.header
+        self._current_item = self.header
         self.selected_item = None
+
+    @property
+    def current_item(self):
+        return self._current_item
+
+    @current_item.setter
+    def current_item(self, item):
+        if item:
+            item.selected = True
+        self._current_item = item
 
     def read_from_file(self, filename):
         assert os.path.exists(filename), 'Cannot find the map file: %s' % (filename)

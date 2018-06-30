@@ -15,3 +15,8 @@ def checkForQuit():
             terminate()
         pygame.event.post(event)
 
+def list_contain(list, item):
+    try:
+        return list.index(item) >= 0
+    except:
+        return False

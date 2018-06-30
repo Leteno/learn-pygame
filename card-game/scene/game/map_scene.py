@@ -95,6 +95,7 @@ def draw_map(surface, map):
     items = [header]
     count = 0
     maxCount = 100
+    history = [] # The drawn items live here
     while items:
         count += 1
         assert count < maxCount, 'count should be less than %d' % maxCount
@@ -106,6 +107,9 @@ def draw_map(surface, map):
             next_items += item.next
             if item.point is None:
                 continue
+            if list_contain(history, item):
+                continue
+            history.append(item)
             surf = g(item)
             rect = surf.get_rect()
             rect.center = item.point
@@ -127,7 +131,10 @@ map_scene_blink_count_max = 5
 def get_proper_image(map_item, current_item, selected_item):
     global map_scene_blink, map_scene_blink_count
 
-    dictionary = DARKDICT
+    dictionary = LIGHTDICT
+    if map_item.selected :
+        dictionary = DARKDICT
+
     if current_item in map_item.prev :
         dictionary = LIGHTDICT
 
