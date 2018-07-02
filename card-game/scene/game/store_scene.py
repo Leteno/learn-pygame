@@ -11,7 +11,7 @@ DEALING = 'DEALING'
 SELECTED = 'SELECTED'
 
 class CardModel:
-    def __init__(self, surf, rect, defaultRect, selecting, card):
+   def __init__(self, surf, rect, defaultRect, selecting, card):
         self.surf = surf
         self.rect = rect
         self.defaultRect = defaultRect
@@ -85,6 +85,11 @@ def eventDealer(cardModels):
                     _model.selecting = True
                 else:
                     _model.selecting = False
+
+        elif event.type == MOUSEBUTTONDOWN:
+            for _model in cardModels:
+                if _model.selecting :
+                    return SELECTED, _model.card
 
         elif event.type == KEYDOWN:
             if event.key == K_RETURN:

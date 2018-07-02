@@ -3,7 +3,7 @@ import pygame
 from pygame.locals import *
 
 import color
-from view import view
+from widget.view.TextView import *
 
 def card_view(card, rect):
     w = rect.width
@@ -18,7 +18,7 @@ def card_view(card, rect):
     content = ""
     for func in card.functional:
         content += "deal %d %s to %s," % (func.power, func.func, func.target)
-    contentSurf = view.TextView(content, 8, int(w * 0.8), int(w * 0.4))
+    contentSurf = TextView(content, 8, int(w * 0.8), int(w * 0.4))
     image_path = card.imagef
     if image_path is None:
         image_path = 'res/battle-darker.png'

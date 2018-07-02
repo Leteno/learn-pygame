@@ -1,4 +1,7 @@
 
+import pygame
+from pygame.locals import *
+
 from scene.game import charector_select_scene, map_scene, store_scene
 from record import *
 
@@ -9,6 +12,11 @@ T_BATTLE = map_scene.T_BATTLE
 def runGame(surface, fpsclock, data) :
     if not hasattr(data.user, 'init') :
         charector_select_scene.show(surface, fpsclock, data)
+
+    w = surface.get_width()
+    h = surface.get_height()
+    dRect = Rect(0, 0, int(w/2), int(h/2))
+    dRect.center = (int(w/2), int(h/2))
 
     record(data)
     record(data.user)
