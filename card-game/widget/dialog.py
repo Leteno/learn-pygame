@@ -28,12 +28,12 @@ class dialog:
         def dismiss():
             _dismiss = True
 
-        titleView = TextView(self.title, 24, _w, int(h * 0.2))
-        messageView = TextView(self.message, 18, _w, int(h * 0.5))
+        titleView = TextView(self.title, 24, _w)
+        messageView = TextView(self.message, 18, _w)
 
-        buttonViewCommon = TextView(self.button, 20, 100, int(h * 0.1))
-        buttonViewHover = TextView(self.button, 20, 100, int(h * 0.1), textcolor=color.BLUE, bgcolor=color.BRIGHTYELLOW)
-        buttonCenter = (0, 0)
+        buttonViewCommon = TextView(self.button, 20, 100)
+        buttonViewHover = TextView(self.button, 20, 100, textcolor=color.WHITE, bgcolor=color.BRIGHTYELLOW)
+        buttonCenter = (100, 100)
         button = Button(buttonViewCommon, buttonViewHover, position=buttonCenter, onclick=dismiss)
 
         titleRect = titleView.get_rect()

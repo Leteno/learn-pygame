@@ -4,9 +4,7 @@ from pygame.locals import *
 
 import color
 
-def TextView(string, textsize, width, height, textcolor=color.BLACK, bgcolor=color.WHITE):
-    textView = pygame.Surface((width, height))
-    textView.fill(bgcolor)
+def TextView(string, textsize, width, height=0, textcolor=color.BLACK, bgcolor=color.WHITE):
     font = pygame.font.Font('freesansbold.ttf', textsize)
     metrics = font.metrics(string)
 
@@ -28,18 +26,12 @@ def TextView(string, textsize, width, height, textcolor=color.BLACK, bgcolor=col
     if len(word) > 0:
         ww.append((word, sumW))
 
-    _h = 0
     line = ''
     currentWidth = 0
+    lines = []
     for word, length in ww:
         if currentWidth + length > width:
-            surf = font.render(line, 1, textcolor)
-            rect = surf.get_rect()
-            rect.left = 0
-            rect.top = _h
-            _h += maxH
-            textView.blit(surf, rect)
-
+            lines.append(line)
             line = ''
             currentWidth = 0
 
@@ -47,12 +39,26 @@ def TextView(string, textsize, width, height, textcolor=color.BLACK, bgcolor=col
         currentWidth += length
 
     if len(line) > 0:
+        lines.append(line)
+
+
+    _h = 0
+    if height <= 0:
+        height = textsize * len(lines)
+
+    print('text height: %d' % height)
+
+    textView = pygame.Surface((width, height))
+    textView.fill(bgcolor)
+
+    for line in lines:
         surf = font.render(line, 1, textcolor)
         rect = surf.get_rect()
         rect.left = 0
         rect.top = _h
         _h += maxH
         textView.blit(surf, rect)
+
 
     print(ww)
 
