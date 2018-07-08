@@ -7,6 +7,11 @@ import util
 from card import card_generator, card_inflater
 import color
 
+from runnable import sequence
+from runnable.sequence import Sprite, Moving
+from runnable.task import Task
+from widget.view.PrintWord import *
+
 DEALING = 'DEALING'
 SELECTED = 'SELECTED'
 
@@ -21,7 +26,22 @@ class CardModel:
 def show(surface, fpsclock, data):
     print('showing store_scene')
 
+    halfW = surface.get_width() / 2
+    halfH = surface.get_height() / 2
+
     cardModels = generateCardModels(surface, data)
+
+    background = pygame.image.load('res/store-background.png')
+    storeTable = pygame.image.load('res/store-table.png')
+    boss = sequence.Sprite(pygame.image.load('res/store-boss-normal.png'))
+    bossSpeaking = pygame.image.load('res/store-boss-speaking.png')
+
+    task = Task()
+    bossMoving = sequence.Moving(boss, (halfW-100, halfH), (halfW, halfH), 1000)
+    task.put('boss', bossMoving)
+    printword = PrintWord('Hello world, My name is Mr.Zheng', 2000, point=(200, 160), after=500)
+
+    firstTime = True
 
     while True:
         # mouse or keyboard event
@@ -33,8 +53,17 @@ def show(surface, fpsclock, data):
             data.current_user_card_pool.append(_card)
             return
 
-        # render
-        surface.fill(color.WHITE)
+        # render background
+        surface.blit(background, background.get_rect())
+
+        # render boss
+        task.process()
+
+        boss.show(surface)
+        printword.show(surface)
+
+        surface.blit(storeTable, storeTable.get_rect())
+
         x0 = 0
         for _model in cardModels:
             rect, defaultRect, selecting = _model.rect, _model.defaultRect, _model.selecting
