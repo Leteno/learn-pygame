@@ -7,18 +7,9 @@ from pygame.locals import *
 from widget.view.TextView import TextView
 from runnable.elapsingtool import ElapsingTool
 
-class Sprite:
-    def __init__(self, surf, position=(0, 0)):
-        self.originalSurf = surf
-        self.surf = surf
-        self.position = position
-
-    def show(self, canvas):
-        rect = self.surf.get_rect()
-        rect.center = self.position
-        canvas.blit(self.surf, rect)
-
 class Sequence:
+#   def process(self)
+#   def getElapsingTool(self)
     pass
 
 class Moving(Sequence):
@@ -42,6 +33,16 @@ class Moving(Sequence):
         positionX = self.fromP[0] - (self.fromP[0] - self.toP[0]) * self.elapsingTool.percentage()
         positionY = self.fromP[1] - (self.fromP[1] - self.toP[1]) * self.elapsingTool.percentage()
         self.sprite.position = (positionX, positionY)
+
+    def getElapsingTool(self):
+        return self.elapsingTool
+
+class Delay(Sequence):
+    def __init__(self, time):
+        self.elapsingTool = ElapsingTool(time)
+
+    def process(self):
+        self.elapsingTool.kick()
 
     def getElapsingTool(self):
         return self.elapsingTool

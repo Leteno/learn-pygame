@@ -8,9 +8,12 @@ from card import card_generator, card_inflater
 import color
 
 from runnable import sequence
-from runnable.sequence import Sprite, Moving
+from runnable.sequence import Moving
 from runnable.task import Task
-from widget.view.PrintWord import *
+from widget.Sprite import Sprite
+from widget.Vango import Vango
+from widget.view.PrintWord import PrintWord
+from widget.view.ImageView import ImageView
 
 DEALING = 'DEALING'
 SELECTED = 'SELECTED'
@@ -33,13 +36,21 @@ def show(surface, fpsclock, data):
 
     background = pygame.image.load('res/store-background.png')
     storeTable = pygame.image.load('res/store-table.png')
-    boss = sequence.Sprite(pygame.image.load('res/store-boss-normal.png'))
     bossSpeaking = pygame.image.load('res/store-boss-speaking.png')
+    boss = Sprite(ImageView(pygame.image.load('res/store-boss-normal.png')))
+    printword = Sprite(PrintWord('Hello world, My name is Mr.Zheng', 2000, after=500), position=(200, 160))
+    vango = Vango()
+    vango.add(boss)
+    vango.add(printword)
 
     task = Task()
-    bossMoving = sequence.Moving(boss, (halfW-100, halfH), (halfW, halfH), 1000)
+    bossMoving = Moving(boss, (halfW-100, halfH), (halfW, halfH), 1000)
     task.put('boss', bossMoving)
-    printword = PrintWord('Hello world, My name is Mr.Zheng', 2000, point=(200, 160), after=500)
+
+    printword.hide()
+    def startPrintWords():
+       printword.show()
+    task.onAfterFinishCallback = startPrintWords
 
     firstTime = True
 
@@ -59,8 +70,7 @@ def show(surface, fpsclock, data):
         # render boss
         task.process()
 
-        boss.show(surface)
-        printword.show(surface)
+        vango.show(surface)
 
         surface.blit(storeTable, storeTable.get_rect())
 
