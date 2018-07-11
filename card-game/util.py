@@ -3,6 +3,8 @@
 import pygame
 from pygame.locals import *
 
+import sys
+
 def terminate():
     pygame.quit()
     sys.exit()
