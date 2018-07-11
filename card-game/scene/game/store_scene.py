@@ -98,13 +98,12 @@ def generateCardModels(surface, data):
     print('generate cards %s' % cards)
 
     cardModels = []
-    cardWidth = 80
+    cardWidth = 60
     cardHeight = 100
-    rect = Rect(0, 0, cardWidth, cardHeight)
     h0 = int(h - cardHeight / 2 - 20)
     x0 = 0
     for card in cards:
-        cardSurf = card_inflater.card_view(card, rect)
+        cardSurf = card_inflater.getCardSurf(card, cardWidth, cardHeight)
         cardRect = cardSurf.get_rect()
         x0 += cardWidth + 10
         cardRect.center = (x0, h0)

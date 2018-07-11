@@ -5,36 +5,37 @@ from pygame.locals import *
 import color
 from widget.view.TextView import TextView
 
-def card_view(card, rect):
-    w = rect.width
-    h = rect.height
-    midW = int(w / 2)
-    midH = int(h / 2)
+_CardBackground = None
 
-    mainSurf = pygame.Surface((w, h))
-    mainSurf.fill(color.YELLOW)
-    font = pygame.font.Font('freesansbold.ttf', 16)
-    titleSurf = font.render(card.name, 1, color.BLACK)
-    content = ""
-    for func in card.functional:
-        content += "deal %d %s to %s," % (func.power, func.func, func.target)
-    contentSurf = TextView(content, 8, int(w * 0.8), int(w * 0.4)).getSurf()
-    image_path = card.imagef
-    if image_path is None:
-        image_path = 'res/battle-darker.png'
-    imageSurf = pygame.image.load(image_path)
-    imageWidth = int(w * 0.8)
-    imageHeight = int(h * 0.4)
-    imageSurf = pygame.transform.scale(imageSurf, (imageWidth, imageHeight))
-    imageRect = imageSurf.get_rect()
-    imageRect.center = (midW, int(h * 0.25))
-    mainSurf.blit(imageSurf, imageRect)
-    titleRect = titleSurf.get_rect()
-    titleRect.center = (midW, int(h * 0.5))
-    mainSurf.blit(titleSurf, titleRect)
-    contentRect = contentSurf.get_rect()
-    contentRect.center = (midW, int(h * 0.6))
-    mainSurf.blit(contentSurf, contentRect)
+class CardBackground:
+    surf = None
+    width = 0
+    height = 0
 
-    return mainSurf
-    
+class Pool:
+    pool = {}
+
+    def put(self, card, cardsurf):
+        self.pool[card.name] = cardsurf
+
+    def get(self, card, width, height):
+        if card.name not in self.pool:
+            surf = self.generateCardSurf(card, width, height)
+            self.put(card, surf)
+        surf = self.pool[card.name]
+        rect = surf.get_rect()
+        if width != rect.width or height != rect.height:
+            surf = pygame.transform.scale(surf, (width, height))
+            self.put(card, surf)
+        return surf
+
+    def generateCardSurf(self, card, width, height):
+        surf = pygame.image.load(card.imagef)
+        rect = surf.get_rect()
+        if width != rect.width or height != rect.height:
+            surf = pygame.transform.scale(surf, (width, height))
+        return surf
+
+_pool = Pool()
+def getCardSurf(card, width, height):
+    return _pool.get(card, width, height)
