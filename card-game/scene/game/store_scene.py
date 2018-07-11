@@ -7,6 +7,7 @@ import util
 from card import card_generator, card_inflater
 import color
 
+from res import resParser
 from runnable import sequence
 from runnable.sequence import Moving
 from runnable.task import Task
@@ -34,10 +35,10 @@ def show(surface, fpsclock, data):
 
     cardModels = generateCardModels(surface, data)
 
-    background = pygame.image.load('res/store-background.png')
-    storeTable = pygame.image.load('res/store-table.png')
-    bossSpeaking = pygame.image.load('res/store-boss-speaking.png')
-    boss = Sprite(ImageView(pygame.image.load('res/store-boss-normal.png')))
+    background = pygame.image.load(resParser.getPath('store-background.png'))
+    storeTable = pygame.image.load(resParser.getPath('store-table.png'))
+    bossSpeaking = pygame.image.load(resParser.getPath('store-boss-speaking.png'))
+    boss = Sprite(ImageView(pygame.image.load(resParser.getPath('store-boss-normal.png'))))
     printword = Sprite(PrintWord('Hello world, My name is Mr.Zheng', 2000, after=500), position=(200, 160))
     vango = Vango()
     vango.add(boss)

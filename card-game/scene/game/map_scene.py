@@ -5,18 +5,19 @@ from pygame.locals import *
 from gamestate import *
 from util import *
 import color
+from res import resParser
 
 T_EVENT = map_item.T_EVENT
 T_STORE = map_item.T_STORE
 T_BATTLE = map_item.T_BATTLE
 
-LIGHTDICT = {T_STORE: pygame.image.load('res/store-lighter.png'),
-             T_EVENT: pygame.image.load('res/event-lighter.png'),
-             T_BATTLE: pygame.image.load('res/battle-lighter.png')}
+LIGHTDICT = {T_STORE: pygame.image.load(resParser.getPath('store-lighter.png')),
+             T_EVENT: pygame.image.load(resParser.getPath('event-lighter.png')),
+             T_BATTLE: pygame.image.load(resParser.getPath('battle-lighter.png'))}
 
-DARKDICT = {T_STORE: pygame.image.load('res/store-darker.png'),
-            T_EVENT: pygame.image.load('res/event-darker.png'),
-            T_BATTLE: pygame.image.load('res/battle-darker.png')}
+DARKDICT = {T_STORE: pygame.image.load(resParser.getPath('store-darker.png')),
+            T_EVENT: pygame.image.load(resParser.getPath('event-darker.png')),
+            T_BATTLE: pygame.image.load(resParser.getPath('battle-darker.png'))}
 
 ICONSIZE = 40
 

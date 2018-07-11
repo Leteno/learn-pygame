@@ -3,6 +3,7 @@
 import copy, re, os
 
 from card import card
+from res import resParser
 
 WELCOME='welcome'
 CONFIG='config'
@@ -169,8 +170,8 @@ class game_data :
         self.score = 0
         self.config = config()
         self.map = map_data()
-        self.map.read_from_file('res/map.dat')
-        self.card_pool = card.get_card_pool('res/card.dat')
+        self.map.read_from_file(resParser.getPath('map.dat'))
+        self.card_pool = card.get_card_pool(resParser.getPath('card.dat'))
         self.current_user_card_pool = []
 
     def reset(self):

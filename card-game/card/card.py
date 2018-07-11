@@ -1,5 +1,6 @@
 
 import json, os
+from res import resParser
 
 T_ENEMY = 'enemy'
 T_FRIEND = 'friend'
@@ -22,7 +23,7 @@ class card :
         self.name = "undefine"
         self.level = 1
         self.cost = 1
-        self.imagef = 'res/card-001.png'
+        self.imagef = resParser.getPath('card-001.png')
         self.functional = []
 
     def __str__(self):

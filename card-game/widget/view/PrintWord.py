@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 
+from res import resParser
 from runnable.elapsingtool import ElapsingTool
 from widget.view.TextView import TextView
 from widget.view.Drawwer import Drawwer
@@ -9,7 +10,7 @@ class PrintWord(Drawwer):
     STANDARD_W = 200
     STANDARD_H = 120
     TEXTWIDTH = int(STANDARD_W * 0.7)
-    dialogBG = pygame.image.load('res/speaking-dialog.png')
+    dialogBG = pygame.image.load(resParser.getPath('speaking-dialog.png'))
     def __init__(self, words, interval, after=0, width=STANDARD_W, height=STANDARD_H):
         self.words = words
         self.width = self.STANDARD_W
