@@ -17,7 +17,7 @@ def main():
     DATA = game_data()
     pygame.display.set_caption('Card Game')
 
-    gameState = WELCOME
+    gameState = GAME
     while True:
         if gameState == WELCOME :
             gameState = welcome_scene.runGame(DISPLAYSURF, FPSCLOCK, DATA)

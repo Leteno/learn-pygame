@@ -3,6 +3,8 @@
 import pygame
 from pygame.locals import *
 
+import sys
+
 def terminate():
     pygame.quit()
     sys.exit()
@@ -15,3 +17,8 @@ def checkForQuit():
             terminate()
         pygame.event.post(event)
 
+def list_contain(list, item):
+    try:
+        return list.index(item) >= 0
+    except:
+        return False

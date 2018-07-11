@@ -2,6 +2,9 @@
 
 import copy, re, os
 
+from card import card
+from res import resParser
+
 WELCOME='welcome'
 CONFIG='config'
 GAME='game'
@@ -58,6 +61,7 @@ class map_item :
         self.point = None
         self.next = []
         self.prev = []
+        self.selected = False
 
     @property
     def type(self):
@@ -76,8 +80,18 @@ class map_item :
 class map_data :
     def __init__(self):
         self.header = None
-        self.current_item = self.header
+        self._current_item = self.header
         self.selected_item = None
+
+    @property
+    def current_item(self):
+        return self._current_item
+
+    @current_item.setter
+    def current_item(self, item):
+        if item:
+            item.selected = True
+        self._current_item = item
 
     def read_from_file(self, filename):
         assert os.path.exists(filename), 'Cannot find the map file: %s' % (filename)
@@ -156,7 +170,9 @@ class game_data :
         self.score = 0
         self.config = config()
         self.map = map_data()
-        self.map.read_from_file('res/map.dat')
+        self.map.read_from_file(resParser.getPath('map.dat'))
+        self.card_pool = card.get_card_pool(resParser.getPath('card.dat'))
+        self.current_user_card_pool = []
 
     def reset(self):
         delattr(self.user, 'init')
